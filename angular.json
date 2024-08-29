@@ -8,13 +8,25 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "standalone": true
+          "standalone": true,
+          "skipTests": true
         },
         "@schematics/angular:directive": {
-          "standalone": true
+          "standalone": true,
+          "skipTests": true
         },
         "@schematics/angular:pipe": {
-          "standalone": true
+          "standalone": true,
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -42,7 +54,13 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -57,13 +75,27 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "sit": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
+            },
+            "uat": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.uat.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -71,14 +103,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
+            "prod": {
               "browserTarget": "angular-structure:build:production"
             },
-            "development": {
-              "browserTarget": "angular-structure:build:development"
+            "sit": {
+              "browserTarget": "angular-structure:build:sit"
+            },
+            "uat": {
+              "browserTarget": "angular-structure:build:uat"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "sit"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -107,5 +142,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "da7c668f-0c74-4f14-a857-60d0b0ea15ee"
   }
 }
